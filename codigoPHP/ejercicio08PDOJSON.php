@@ -33,7 +33,7 @@
             $sacarTablas->execute();
 
             $aDatos = [];
-            $fp = fopen('../tmp/departamentosJSON.json', 'w');
+            $archivoJSON = fopen('../tmp/departamentosJSON.json', 'w');
             $contador = 0; //este contador nos ayudara a numerar los diferentes departamentos
             while ($tabla = $sacarTablas->fetch()) { //se recorren todas las tablas
                 $consultarTablas = "SELECT * FROM " . $tabla[$contador]; //sacamos todos los registros de la tabla
@@ -48,13 +48,14 @@
                 $contador++;
             }
             $aJSON = json_encode($aDatos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-            fwrite($fp, $aJSON);
+            fwrite($archivoJSON, $aJSON);
             $sacarTablas->closeCursor();
 
 
-            if (fclose($fp)) {
+            if (fclose($archivoJSON)) {
                 echo "<h2>Exportación completa</h2>";
-                echo '<a href="../tmp/departamentosJSON.json">¡Comprobar JSON!</a>';
+                echo '<a href="../tmp/departamentosJSON.json">¡Comprobar JSON!</a><br>';
+                echo '<a href="exportarlocaljson.php">¡Descargar departamentosJSON.json!</a>';
             } else {
                 echo "<p style='color:red;'>Error al guardar el archivo JSON</p>"; //Muestra el mesaje de error
             }
