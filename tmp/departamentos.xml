@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DAW218DBDepartamentos>
+  <Departamento>
+    <DatosDepartamento1>
+      <CodDepartamento>CON</CodDepartamento>
+      <DescDepartamento>Departamento de contabilidad</DescDepartamento>
+      <VolumenNegocio>1700</VolumenNegocio>
+      <FechaBaja>2008-11-13</FechaBaja>
+    </DatosDepartamento1>
+    <DatosDepartamento2>
+      <CodDepartamento>ELE</CodDepartamento>
+      <DescDepartamento>Departamento de electrónica</DescDepartamento>
+      <VolumenNegocio>2000</VolumenNegocio>
+      <FechaBaja>2008-11-15</FechaBaja>
+    </DatosDepartamento2>
+    <DatosDepartamento3>
+      <CodDepartamento>OOA</CodDepartamento>
+      <DescDepartamento>Departamento Array</DescDepartamento>
+      <VolumenNegocio>1</VolumenNegocio>
+      <FechaBaja></FechaBaja>
+    </DatosDepartamento3>
+    <DatosDepartamento4>
+      <CodDepartamento>OOB</CodDepartamento>
+      <DescDepartamento>Departamento Array</DescDepartamento>
+      <VolumenNegocio>2</VolumenNegocio>
+      <FechaBaja></FechaBaja>
+    </DatosDepartamento4>
+    <DatosDepartamento5>
+      <CodDepartamento>OOC</CodDepartamento>
+      <DescDepartamento>Departamento Array</DescDepartamento>
+      <VolumenNegocio>3</VolumenNegocio>
+      <FechaBaja></FechaBaja>
+    </DatosDepartamento5>
+    <DatosDepartamento6>
+      <CodDepartamento>OOD</CodDepartamento>
+      <DescDepartamento>Departamento Array</DescDepartamento>
+      <VolumenNegocio>4</VolumenNegocio>
+      <FechaBaja></FechaBaja>
+    </DatosDepartamento6>
+    <DatosDepartamento7>
+      <CodDepartamento>OOE</CodDepartamento>
+      <DescDepartamento>Departamento Array</DescDepartamento>
+      <VolumenNegocio>5</VolumenNegocio>
+      <FechaBaja></FechaBaja>
+    </DatosDepartamento7>
+    <DatosDepartamento8>
+      <CodDepartamento>TAA</CodDepartamento>
+      <DescDepartamento>Departamento de tarifas</DescDepartamento>
+      <VolumenNegocio>1500</VolumenNegocio>
+      <FechaBaja></FechaBaja>
+    </DatosDepartamento8>
+    <DatosDepartamento9>
+      <CodDepartamento>VEN</CodDepartamento>
+      <DescDepartamento>Departamento de ventas</DescDepartamento>
+      <VolumenNegocio>1500</VolumenNegocio>
+      <FechaBaja>2008-11-11</FechaBaja>
+    </DatosDepartamento9>
+  </Departamento>
+</DAW218DBDepartamentos>

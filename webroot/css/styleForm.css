@@ -1,0 +1,140 @@
+/* 
+    Created on : 21 oct. 2020, 11:17:31
+    Author     : daw2
+*/
+*{
+    box-sizing:border-box;
+    font-family: Copperplate Gothic Light, sans-serif;
+}
+body{
+   background-color: #A9C6FF;
+   overflow-y: hidden;
+}
+fieldset{
+    border:0;
+    
+}
+legend{
+    font-size: 35px;
+    font-weight:bold;
+}
+form{
+    
+	width: 750px;
+	border-radius:10px;
+	margin: 0 auto;
+	background-color:#ccc;
+}
+
+form label{
+        padding: 5px;
+	font-weight:bold;
+	display:inline-block;
+}
+form input{
+    padding:3px 10px;
+    margin:8px 0;
+    display:inline-block;
+}
+form input[type="text"][name="correo"]{
+    width:300px;
+}
+form input[type="text"]{
+        border-radius:3px;
+	width:180px;
+	
+}
+input:focus {
+  border-color: #00BA68;
+  background-color: #FAFBFC;
+  outline: 5px;
+  color:#008508;
+}
+input:placeholder-shown {
+  background-color: #FAFBFC;
+}
+input[type="date"]{
+  border:0;
+}
+
+form input[type="submit"]{
+	width:100%;
+	padding:8px 16px;
+	margin-top:32px;
+	border:1px solid #000;
+	border-radius:5px;
+	display:block;
+	color:#fff;
+	background-color:#000;
+} 
+
+form input[type="submit"]:hover{
+	cursor:pointer;
+        color:black;
+        background: white;
+}
+input[type="radio"]:checked + label{
+  color:#008508;
+  text-decoration: underline;
+}
+
+input[type="checkbox"]:checked + label{
+  color:#008508;
+  text-decoration: underline;
+}
+
+.errores{
+    color:red;
+    float:right;
+    margin:0 auto;
+}
+.required{
+    background-color: #ADB9C5;
+    border-radius:10px;
+}
+.required, .optional{
+    padding: 16px;
+    margin-bottom: 10px;
+}
+
+.required select{
+    border: 0;
+    font-size: 14px;
+    height: 30px;
+    padding: 5px;
+    width: 250px;
+}
+.required select:focus{
+    border-color: #00BA68;
+    background-color: #FAFBFC;
+    outline: 5px;
+    color:#008508;
+}
+
+/*RESPUESTA*/
+
+.respuesta{
+    padding: 10px;
+    width: 750px;
+    border-radius:10px;
+    margin: 0 auto;
+    background-color:#ccc;
+}
+.respuesta div{
+    padding: 20px;
+}
+
+.rRequired {
+    background-color: #ADB9C5;
+}
+.rRequired .destacar{
+    font-weight:bold;
+    color:#008508;
+}
+
+.rOptional .destacar{
+    font-weight:bold;
+    color: purple;
+}
+
+

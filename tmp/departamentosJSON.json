@@ -1,0 +1,56 @@
+[
+    {
+        "CodDepartamento": "CON",
+        "DescDepartamento": "Departamento de contabilidad",
+        "VolumenNegocio": "1700",
+        "FechaBaja": "2008-11-13"
+    },
+    {
+        "CodDepartamento": "ELE",
+        "DescDepartamento": "Departamento de electrónica",
+        "VolumenNegocio": "2000",
+        "FechaBaja": "2008-11-15"
+    },
+    {
+        "CodDepartamento": "OOA",
+        "DescDepartamento": "Departamento Array",
+        "VolumenNegocio": "1",
+        "FechaBaja": null
+    },
+    {
+        "CodDepartamento": "OOB",
+        "DescDepartamento": "Departamento Array",
+        "VolumenNegocio": "2",
+        "FechaBaja": null
+    },
+    {
+        "CodDepartamento": "OOC",
+        "DescDepartamento": "Departamento Array",
+        "VolumenNegocio": "3",
+        "FechaBaja": null
+    },
+    {
+        "CodDepartamento": "OOD",
+        "DescDepartamento": "Departamento Array",
+        "VolumenNegocio": "4",
+        "FechaBaja": null
+    },
+    {
+        "CodDepartamento": "OOE",
+        "DescDepartamento": "Departamento Array",
+        "VolumenNegocio": "5",
+        "FechaBaja": null
+    },
+    {
+        "CodDepartamento": "TAA",
+        "DescDepartamento": "Departamento de tarifas",
+        "VolumenNegocio": "1500",
+        "FechaBaja": null
+    },
+    {
+        "CodDepartamento": "VEN",
+        "DescDepartamento": "Departamento de ventas",
+        "VolumenNegocio": "1500",
+        "FechaBaja": "2008-11-11"
+    }
+]
