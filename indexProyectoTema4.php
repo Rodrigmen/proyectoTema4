@@ -386,38 +386,6 @@
                             <p class="casper">         </p>
                         </td>
                     </tr>
-                                        
-                    <!--DESCARGAR COPIA DE SEGURIDAD-->
-                    <tr>
-                        <td class="enunciado">DESCARGAR COPIA DE SEGURIDAD</td>
-                        <td class="iconos">
-                            <a href="codigoPHP/exportarlocalxml.php">
-                                <img class="imgejer" src="webroot/css/images/ejecutar.png" alt="EjecutarPDO" title="EjecutarPDO"/>
-                            </a>
-                        </td>
-                        <td class="iconos">
-                            <a href="mostrarcodigo/mostrarexportarlocalxml.php">
-                                <img class="imgejer" src="webroot/css/images/mostrar.png" alt="MostrarPDO" title="MostrarPDO"/>
-                            </a>
-                        </td>
-                        <td class="iconos">
-                            <a href="codigoPHP/exportarlocaljson.php">
-                                <img class="imgejer" src="webroot/css/images/ejecutar.png" alt="EjecutarPDO" title="EjecutarPDO"/>
-                            </a>
-                        </td>
-                        <td class="iconos">
-                            <a href="mostrarcodigo/mostrarexportarlocaljson.php">
-                                <img class="imgejer" src="webroot/css/images/mostrar.png" alt="MostrarPDO" title="MostrarPDO"/>
-                            </a>
-                        </td>
-
-                        <td>
-                            <p class="casper">         </p>
-                        </td>
-                          
-                    </tr>
-
-
                 </table>
             </div>
 

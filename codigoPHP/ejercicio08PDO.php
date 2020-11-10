@@ -70,7 +70,8 @@
             $guardado = $docXML->save($nombreArchivo); //guardamos el archivo
             if ($guardado) {
                 echo "<h2>Exportación completa</h2>";
-                echo '<a href="../tmp/departamentos.xml">¡Comprobar XML!</a>';
+                echo '<a href="../tmp/departamentos.xml">¡Comprobar XML!</a><br>';
+                echo '<a href="exportarlocalxml.php">¡Descargar separtamentos.xml!</a><br>';
             } else {
                 echo "<p style='color:red;'>Error al guardar el archivo XML</p>"; //Muestra el mesaje de error
             }

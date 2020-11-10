@@ -33,7 +33,7 @@
             $sacarTablas->execute();
 
             $aDatos = [];
-            $fp = fopen('../tmp/departamentosCSV.csv', 'w');
+            $archivoCSV = fopen('../tmp/departamentosCSV.csv', 'w');
             $contador = 0; //este contador nos ayudara a numerar los diferentes departamentos
             while ($tabla = $sacarTablas->fetch()) { //se recorren todas las tablas
                 $consultarTablas = "SELECT * FROM " . $tabla[$contador]; //sacamos todos los registros de la tabla
@@ -47,15 +47,15 @@
                 $contador++;
             }
             foreach ($aDatos as $campos) {
-                fputcsv($fp, $campos);
+                fputcsv($archivoCSV, $campos);
             }
             
             $sacarTablas->closeCursor();
 
 
-            if (fclose($fp)) {
+            if (fclose($archivoCSV)) {
                 echo "<h2>Exportación completa</h2>";
-                echo '<a href="../tmp/departamentosCSV.csv">¡Comprobar CSV!</a>';
+                echo '<a href="../tmp/departamentosCSV.csv">¡Comprobar/Descargar CSV!</a>';
             } else {
                 echo "<p style='color:red;'>Error al guardar el archivo CSV</p>"; //Muestra el mesaje de error
             }
