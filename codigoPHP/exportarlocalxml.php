@@ -14,6 +14,5 @@ if (file_exists($fichero)) {
     exit;
 } else {
     echo "<p style='color:red;'>Error al obtener el archivo XML</p>"; //Muestra el mesaje de error
-    echo '<a href="ejercicio08PDO.php">¡Crear copia de seguridad (archivo departamento.xml)!</a>'; //se le muestra un enlace al usuario para ver todos los departamentos (ejercicio4)
 }
 ?>
