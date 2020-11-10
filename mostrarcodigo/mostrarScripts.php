@@ -27,6 +27,18 @@
             echo '<h1>SCRIPT DE BORRADO</h1>';
             $filename3 = "../scriptDB/BorraDAW218DBDepartamentos.sql";
             highlight_file($filename3);
+            
+            echo '<h1>SCRIPT DE CREACIÓN - SERVIDORES 1&1</h1>';
+            $filename4 = "../scriptDB/crear.sql";
+            highlight_file($filename4);
+            
+            echo '<h1>SCRIPT DE CARGA INICIAL - SERVIDORES 1&1</h1>';
+            $filename5 = "../scriptDB/cargar.sql";
+            highlight_file($filename5);
+            
+            echo '<h1>SCRIPT DE BORRADO - SERVIDORES 1&1</h1>';
+            $filename6 = "../scriptDB/borrar.sql";
+            highlight_file($filename6);
 
         ?>
         
