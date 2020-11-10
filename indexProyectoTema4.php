@@ -64,18 +64,6 @@
                         </td>
                     </tr>
 
-                    <!--COPIA DE SEGURIDAD ACTUAL-->
-                    <tr>
-                        <td class="enunciado">COPIA DE SEGURIDAD ACTUAL</td>
-                        <td class="iconos">
-                            <a href="tmp/departamentos.xml">
-                                <img class="imgejer" src="webroot/css/images/mostrar.png" alt="XML" title="XML"/>
-                            </a>
-                        </td>
-                        <td>
-                            <p class="casper">         </p>
-                        </td>
-                    </tr>
 
                     <!--VACIAR TABLA DEPARTAMENTOS-->
                     <tr>
@@ -87,24 +75,6 @@
                         </td>
                         <td class="iconos">
                             <a href="mostrarcodigo/mostrarVaciar.php">
-                                <img class="imgejer" src="webroot/css/images/mostrar.png" alt="MostrarPDO" title="MostrarPDO"/>
-                            </a>
-                        </td>
-                        <td>
-                            <p class="casper">         </p>
-                        </td>
-                    </tr>
-
-                    <!--CARGA INICIAL-->
-                    <tr>
-                        <td class="enunciado">CARGA INICIAL TABLA DEPARTAMENTOS</td>
-                        <td class="iconos">
-                            <a href="codigoPHP/cargaInicial.php">
-                                <img class="imgejer" src="webroot/css/images/ejecutar.png" alt="CARGAR" title="CARGAR"/>
-                            </a>
-                        </td>
-                        <td class="iconos">
-                            <a href="mostrarcodigo/mostrarCargar.php">
                                 <img class="imgejer" src="webroot/css/images/mostrar.png" alt="MostrarPDO" title="MostrarPDO"/>
                             </a>
                         </td>
@@ -385,36 +355,6 @@
                         <td>
                             <p class="casper">         </p>
                         </td>
-                    </tr>
-                                        
-                    <!--DESCARGAR COPIA DE SEGURIDAD-->
-                    <tr>
-                        <td class="enunciado">DESCARGAR COPIA DE SEGURIDAD</td>
-                        <td class="iconos">
-                            <a href="codigoPHP/exportarlocalxml.php">
-                                <img class="imgejer" src="webroot/css/images/ejecutar.png" alt="EjecutarPDO" title="EjecutarPDO"/>
-                            </a>
-                        </td>
-                        <td class="iconos">
-                            <a href="mostrarcodigo/mostrarexportarlocalxml.php">
-                                <img class="imgejer" src="webroot/css/images/mostrar.png" alt="MostrarPDO" title="MostrarPDO"/>
-                            </a>
-                        </td>
-                        <td class="iconos">
-                            <a href="codigoPHP/exportarlocaljson.php">
-                                <img class="imgejer" src="webroot/css/images/ejecutar.png" alt="EjecutarPDO" title="EjecutarPDO"/>
-                            </a>
-                        </td>
-                        <td class="iconos">
-                            <a href="mostrarcodigo/mostrarexportarlocaljson.php">
-                                <img class="imgejer" src="webroot/css/images/mostrar.png" alt="MostrarPDO" title="MostrarPDO"/>
-                            </a>
-                        </td>
-
-                        <td>
-                            <p class="casper">         </p>
-                        </td>
-                          
                     </tr>
 
 
