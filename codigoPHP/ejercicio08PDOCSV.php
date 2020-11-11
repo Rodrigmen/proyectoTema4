@@ -1,3 +1,15 @@
+<?php
+$fichero = '../tmp/departamentosCSV.csv';
+if (file_exists($fichero)) {
+    header('Content-Type: application/octet-stream');
+    header('Content-Disposition: attachment; filename="' . basename($fichero) . '"');
+    header('Content-Length: ' . filesize($fichero));
+    readfile($fichero);
+    exit;
+} else {
+    echo "<p style='color:red;'>Error al obtener el archivo CSV</p>"; //Muestra el mesaje de error
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -49,16 +61,9 @@
             foreach ($aDatos as $campos) {
                 fputcsv($archivoCSV, $campos);
             }
-            
+
             $sacarTablas->closeCursor();
-
-
-            if (fclose($archivoCSV)) {
-                echo "<h2>Exportación completa</h2>";
-                echo '<a href="../tmp/departamentosCSV.csv">¡Comprobar/Descargar CSV!</a>';
-            } else {
-                echo "<p style='color:red;'>Error al guardar el archivo CSV</p>"; //Muestra el mesaje de error
-            }
+            fclose($archivoCSV);
         } catch (PDOException $errorConexion) {
             echo "<p style='color:red;'>Mensaje de error: " . $excepcionPDO->getMessage() . "</p>"; //Muestra el mesaje de error
             echo "<p style='color:red;'>Código de error: " . $excepcionPDO->getCode() . "</p>"; // Muestra el codigo del error
