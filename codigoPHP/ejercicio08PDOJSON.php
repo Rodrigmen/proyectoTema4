@@ -55,7 +55,25 @@
             if (fclose($archivoJSON)) {
                 echo "<h2>Exportación completa</h2>";
                 echo '<a href="../tmp/departamentosJSON.json">¡Comprobar JSON!</a><br>';
-                echo '<a href="exportarlocaljson.php">¡Descargar departamentosJSON.json!</a>';
+
+                if (isset($_POST['descargar'])) {
+                    $fichero = '../tmp/departamentosJSON.json';
+                    if (file_exists($fichero)) {
+                        header('Content-Type: application/octet-stream');
+                        header('Content-Disposition: attachment; filename="' . basename($fichero) . '"');
+                        header('Content-Length: ' . filesize($fichero));
+                        readfile($fichero);
+                        exit;
+                    } else {
+                        echo "<p style='color:red;'>Error al obtener el archivo JSON</p>"; //Muestra el mesaje de error
+                    }
+                } else {
+                    ?>
+                    <form name="buscar" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                        <input type="submit" name="descargar" value="Descargar" />
+                    </form>
+                    <?php
+                }
             } else {
                 echo "<p style='color:red;'>Error al guardar el archivo JSON</p>"; //Muestra el mesaje de error
             }

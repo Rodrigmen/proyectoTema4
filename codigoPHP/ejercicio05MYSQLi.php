@@ -27,30 +27,30 @@
         try {
             @$oConexionMYSQLi = new mysqli(HOST, USER, PASSWORD, DB); //el @ para ignorar los warnings 
             $oConexionMYSQLi->set_charset("utf8");
-
+            $oConexionMYSQLi->autocommit(false);
 
             //PASO PREVIO: COMPROBAMOS SI YA SE HA REALIZADO ESTA TRANSACCIÓN CON ANTERIORIDAD
             //comprobamos si existen los tres departamentos que vamos a incluir, si existen los borramos para posteriormente incluirlos de nuevo
 
-            $aCodigos = ['AAT', 'ABT', 'ACT'];
+            $yaIncluidos = false; //variable booleana que indica que a priori es falso que se haya realizado previamente la transacción
             $seleccionTodosDep = $oConexionMYSQLi->stmt_init();
-            $consultaTodos = "SELECT * FROM Departamento ORDER BY CodDepartamento";
+            $consultaTodos = "SELECT * FROM Departamento WHERE CodDepartamento = ?";
+            $aCodigos = ['AAT', 'ABT', 'ACT'];
             $seleccionTodosDep->prepare($consultaTodos);
             $seleccionTodosDep->execute();
-            $seleccionTodosDep->store_result(); //alamacenamos el resultado, con el objetivo de poder utilizar num_rows
-            $seleccionTodosDep->bind_result($codigo); //obtenemos el resultado y lo metemos enn variables
+            foreach ($aCodigos as $codigo) {
+                $seleccionTodosDep->bind_param('s', $codigo);
+                //Ejecutamos la consulta
+                $seleccionTodosDep->execute();
+                $seleccionTodosDep->store_result(); //alamacenamos el resultado, con el objetivo de poder utilizar num_rows
+                $numeroDepartamentos = $seleccionTodosDep->num_rows();
 
-            $yaIncluidos = false; //variable booleana que indica que a priori es falso que se haya realizado previamente la transacción
-
-
-            while ($seleccionTodosDep->fetch()) { //convertimos a objetos todos los departamentos
-                foreach ($aCodigos as $codigo) {
-                    if ($codigo === $codigo) { //si en la base de datos existe alguno de estos codigos
-                        $yaIncluidos = true; //es que ya se realizo la transacción previamente
-                    }
+                if ($numeroDepartamentos > 0) {
+                    $yaIncluidos = true;
                 }
             }
             $seleccionTodosDep->close();
+
             if ($yaIncluidos === true) {//si se realizo la transaccion previamente
                 $borramosDepartamentos = $oConexionMYSQLi->stmt_init();
                 $borramosDepartamentos->prepare('DELETE FROM Departamento WHERE CodDepartamento LIKE ?'); //se borran, dando paso a una nueva transacción
@@ -58,8 +58,9 @@
                     $borramosDepartamentos->bind_param('s', $codigo);
                     $borramosDepartamentos->execute();
                 }
+                $borramosDepartamentos->close();
             }
-            $borramosDepartamentos->close();
+
             $aDepartamentos = [
                 1 => ['AAT', 'Departamento de Transaccion', 1],
                 2 => ['ABT', 'Departamento de Transaccion', 2],
@@ -70,13 +71,13 @@
             //Creación de la consulta preparada
             $consultaInsertar = "INSERT INTO Departamento (CodDepartamento, DescDepartamento, VolumenNegocio) VALUES (?, ?, ?)";
 
-            $contadorExec = 0;
             //Preparación de la consulta preparada
             $insertarDepartamentos->prepare($consultaInsertar);
 
             foreach ($aDepartamentos as $departamento) {
                 for ($i = 0; $i < count($departamento); $i++) {
                     $insertarDepartamentos->bind_param('ssi', $departamento[0], $departamento[1], $departamento[2]);
+                    $insertarDepartamentos->execute();
                 }
             }
             $insertarDepartamentos->close();
