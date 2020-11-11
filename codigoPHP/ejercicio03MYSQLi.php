@@ -75,19 +75,19 @@
                 //El código es primary key, por lo que no se puede repetir. Entonces validamos la entrada para que no se intente crear un departamento con un código ya insertado
                 //Se sacan mediante una consulta a la base de datos todos los códigos
                 $codigosExistentes = $oConexionMYSQLi->stmt_init();
-                $consultaCodigos = "SELECT CodDepartamento FROM Departamento ORDER BY CodDepartamento";
+                $consultaCodigos = "SELECT * FROM Departamento WHERE CodDepartamento = ?";
                 $codigosExistentes->prepare($consultaCodigos);
+                $codigo = strtoupper($_POST['codigo']);
+                $codigosExistentes->bind_param('s', $codigo);
                 $codigosExistentes->execute();
                 $codigosExistentes->store_result(); //alamacenamos el resultado, con el objetivo de poder utilizar num_rows
-                $codigosExistentes->bind_result($codigo); //obtenemos el resultado y lo metemos enn variables
-                //mientras haya codigos, pasamos cada uno a objeto
-                while ($codigosExistentes->fetch()) {
-                    if ($codigo === strtoupper($_POST['codigo'])) {
-                        //si algun codigo coincide con el codigo que se ha introducido en el formulario, inidicamos el error
-                        $aErrores['eCodigo'] = "¡Código ya EXISTENTE!";
-                    }
-                }
 
+                $numeroDepartamentos3 = $codigosExistentes->num_rows;
+
+
+                if ($numeroDepartamentos3 > 0) {
+                    $aErrores['eCodigo'] = "¡Código ya EXISTENTE!";
+                }
                 $codigosExistentes->close();
                 //DESCRIPCIÓN (input type="text") [OBLIGATORIO {texto alfabetico}] 
                 $aErrores['eDescripcion'] = validacionFormularios::comprobarAlfabetico($_POST['descripcion'], 35, 1, REQUIRED);
@@ -112,9 +112,8 @@
                 //Creación de la consulta preparada
                 $consultaInsertar = "INSERT INTO Departamento (CodDepartamento, DescDepartamento, VolumenNegocio) VALUES (?, ?, ?)";
                 $insertarDepartamento->prepare($consultaInsertar);
-
                 //Insertamos los datos necesarios en la consulta preparada
-                $insertarDepartamento->bind_param('ssi', strtoupper($_POST['codigo']), $_POST['descripcion'], $_POST['volumen']);
+                $insertarDepartamento->bind_param('ssi', $codigo, $_POST['descripcion'], $_POST['volumen']);
 
                 //Ejecutamos la consulta preparada
                 $insertarDepartamento->execute();
@@ -123,13 +122,13 @@
                 $insertarDepartamento->close();
 
                 //Tras ejercutarse la consulta, mostramos todos los departamentos de la base de datos e indicamos el nuevo
-                echo '<h2>¡Se ha insertado <span style="color:green;">' . strtoupper($_POST['codigo']) . '</span>!</h2>';
+                echo '<h2>¡Se ha insertado <span style="color:green;">' . $codigo . '</span>!</h2>';
                 $seleccionTodosDep = $oConexionMYSQLi->stmt_init();
                 $consultaTodos = "SELECT * FROM Departamento ORDER BY CodDepartamento";
                 $seleccionTodosDep->prepare($consultaTodos);
                 $seleccionTodosDep->execute();
                 $seleccionTodosDep->store_result(); //alamacenamos el resultado, con el objetivo de poder utilizar num_rows
-                $seleccionTodosDep->bind_result($codigo, $descripcion, $volumen, $fecha); //obtenemos el resultado y lo metemos enn variables
+                $seleccionTodosDep->bind_result($codigo2, $descripcion, $volumen, $fecha); //obtenemos el resultado y lo metemos enn variables
 
                 $numeroDepartamentos = $seleccionTodosDep->num_rows;
                 if ($numeroDepartamentos === 0) {
@@ -144,7 +143,7 @@
                     . "</tr>";
                     while ($seleccionTodosDep->fetch()) {
                         echo "<tr>"
-                        . "<td>$codigo</td>"
+                        . "<td>$codigo2</td>"
                         . "<td> $descripcion</td>"
                         . "<td> $volumen</td>"
                         . "<td> $fecha</td>"
@@ -166,88 +165,88 @@
                         <div class="required">
                             <label for="codigo">Código: </label>
                             <input type="text" name="codigo" placeholder="3 carácteres alfabéticos (pasaran a mayúsculas)" value="<?php
-        //si no hay error y se ha insertado un valor en el campo con anterioridad
-        if ($aErrores['eCodigo'] == null && isset($_POST['codigo'])) {
+                            //si no hay error y se ha insertado un valor en el campo con anterioridad
+                            if ($aErrores['eCodigo'] == null && isset($_POST['codigo'])) {
 
-            //se muestra dicho valor (el campo no aparece vacío si se relleno correctamente 
-            //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
-            echo $_POST['codigo'];
-        }
-                ?>"/>
+                                //se muestra dicho valor (el campo no aparece vacío si se relleno correctamente 
+                                //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
+                                echo $_POST['codigo'];
+                            }
+                            ?>"/>
 
                             <?php
-                                   //si hay error en este campo
-                                   if ($aErrores['eCodigo'] != NULL) {
-                                       echo "<div class='errores'>" .
-                                       //se muestra dicho error
-                                       $aErrores['eCodigo'] .
-                                       '</div>';
-                                   }
-                                   ?>
+                            //si hay error en este campo
+                            if ($aErrores['eCodigo'] != NULL) {
+                                echo "<div class='errores'>" .
+                                //se muestra dicho error
+                                $aErrores['eCodigo'] .
+                                '</div>';
+                            }
+                            ?>
                         </div>
 
                         <!-----------------DESCRIPCIÓN----------------->
                         <div class="required">
                             <label for="codigo">Descripción: </label>
                             <input type="text" name="descripcion" placeholder="Departamento de..." value="<?php
-                    //si no hay error y se ha insertado un valor en el campo con anterioridad
-                    if ($aErrores['eDescripcion'] == null && isset($_POST['descripcion'])) {
+                            //si no hay error y se ha insertado un valor en el campo con anterioridad
+                            if ($aErrores['eDescripcion'] == null && isset($_POST['descripcion'])) {
 
-                        //se muestra dicho valor (el campo no aparece vacío si se relleno correctamente 
-                        //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
-                        echo $_POST['descripcion'];
-                    }
-                                   ?>"/>
+                                //se muestra dicho valor (el campo no aparece vacío si se relleno correctamente 
+                                //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
+                                echo $_POST['descripcion'];
+                            }
+                            ?>"/>
 
                             <?php
-                                   //si hay error en este campo
-                                   if ($aErrores['eDescripcion'] != NULL) {
-                                       echo "<div class='errores'>" .
-                                       //se muestra dicho error
-                                       $aErrores['eDescripcion'] .
-                                       '</div>';
-                                   }
-                                   ?>
+                            //si hay error en este campo
+                            if ($aErrores['eDescripcion'] != NULL) {
+                                echo "<div class='errores'>" .
+                                //se muestra dicho error
+                                $aErrores['eDescripcion'] .
+                                '</div>';
+                            }
+                            ?>
                         </div>
 
                         <!-----------------VOLUMEN DE NEGOCIO----------------->
                         <div class="required">
                             <label for="codigo">Volumen de negocio: </label>
                             <input type="number" name="volumen" placeholder="Más de 1" value="<?php
-                    //si no hay error y se ha insertado un valor en el campo con anterioridad
-                    if ($aErrores['eVolumen'] == null && isset($_POST['volumen'])) {
+                            //si no hay error y se ha insertado un valor en el campo con anterioridad
+                            if ($aErrores['eVolumen'] == null && isset($_POST['volumen'])) {
 
-                        //se muestra dicho valor (el campo no aparece vacío si se relleno correctamente 
-                        //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
-                        echo $_POST['volumen'];
-                    }
-                                   ?>"/>
+                                //se muestra dicho valor (el campo no aparece vacío si se relleno correctamente 
+                                //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
+                                echo $_POST['volumen'];
+                            }
+                            ?>"/>
 
                             <?php
-                                   //si hay error en este campo
-                                   if ($aErrores['eVolumen'] != NULL) {
-                                       echo "<div class='errores'>" .
-                                       //se muestra dicho error
-                                       $aErrores['eVolumen'] .
-                                       '</div>';
-                                   }
-                                   ?>
+                            //si hay error en este campo
+                            if ($aErrores['eVolumen'] != NULL) {
+                                echo "<div class='errores'>" .
+                                //se muestra dicho error
+                                $aErrores['eVolumen'] .
+                                '</div>';
+                            }
+                            ?>
                         </div>
 
 
                         <input type="submit" name="enviar" value="Enviar" />
                     </fieldset>
                 </form>
-        <?php
-    }
-} catch (mysqli_sql_exception $excepcionMySQLi) {
-    echo "<p style='color:red;'>Mensaje de error: " . $excepcionMySQLi->getMessage() . "</p>"; //Muestra el mesaje de error
-    echo "<p style='color:red;'>Código de error: " . $excepcionMySQLi->getCode() . "</p>"; // Muestra el codigo del error
-    exit(); //Termina el script
-} finally {
-    $oConexionMYSQLi->close(); //cerramos la conexión 
-}
-?>      
+                <?php
+            }
+        } catch (mysqli_sql_exception $excepcionMySQLi) {
+            echo "<p style='color:red;'>Mensaje de error: " . $excepcionMySQLi->getMessage() . "</p>"; //Muestra el mesaje de error
+            echo "<p style='color:red;'>Código de error: " . $excepcionMySQLi->getCode() . "</p>"; // Muestra el codigo del error
+            exit(); //Termina el script
+        } finally {
+            $oConexionMYSQLi->close(); //cerramos la conexión 
+        }
+        ?>      
     </body>
 
 </html>       

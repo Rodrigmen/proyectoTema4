@@ -72,18 +72,18 @@
                 //El código es primary key, por lo que no se puede repetir. Entonces validamos la entrada para que no se intente crear un departamento con un código ya insertado
                 //Se sacan mediante una consulta a la base de datos todos los códigos
 
-                $consultaCodigos = "SELECT CodDepartamento FROM Departamento ORDER BY CodDepartamento";
+                $consultaCodigos = "SELECT * FROM Departamento WHERE CodDepartamento = :codigo";
                 $codigosExistentes = $oConexionPDO->prepare($consultaCodigos);
+                $codigo = strtoupper($_POST['codigo']); //METEMOS EN UNA VARIABLE EL CODIGO INTRODUCIDO PASADO A MAYUSCULAS, DICHA VARIABLE SE USA PARA LA BUSQUEDA E INSERCION DEL CÓDIGO
+                $codigosExistentes->bindParam(':codigo', $codigo);
                 $codigosExistentes->execute();
 
-                //mientras haya codigos, pasamos cada uno a objeto
-                while ($codigoExistente = $codigosExistentes->fetch(PDO::FETCH_OBJ)) {
-                    //si algun codigo coincide con el codigo que se ha introducido en el formulario, inidicamos el error
+                $numeroDepartamentos3 = $codigosExistentes->rowCount();
 
-                    if (($codigoExistente->CodDepartamento) === strtoupper($_POST['codigo'])) {
-                        $aErrores['eCodigo'] = "¡Código ya EXISTENTE!";
-                    }
+                if ($numeroDepartamentos3 > 0) {
+                    $aErrores['eCodigo'] = "¡Código ya EXISTENTE!";
                 }
+
 
                 //DESCRIPCIÓN (input type="text") [OBLIGATORIO {texto alfabetico}] 
                 $aErrores['eDescripcion'] = validacionFormularios::comprobarAlfabetico($_POST['descripcion'], 35, 1, REQUIRED);
@@ -111,7 +111,7 @@
                 $insertarDepartamento = $oConexionPDO->prepare($consultaInsertar);
 
                 //Insertamos los datos en la consulta preparada
-                $insertarDepartamento->bindParam(':codigo', strtoupper($_POST['codigo']));
+                $insertarDepartamento->bindParam(':codigo', $codigo);
                 $insertarDepartamento->bindParam(':descripcion', $_POST['descripcion']);
                 $insertarDepartamento->bindParam(':volumen', $_POST['volumen']);
 

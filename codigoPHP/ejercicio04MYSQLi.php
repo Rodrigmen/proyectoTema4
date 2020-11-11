@@ -41,7 +41,6 @@
         mysqli_report(MYSQLI_REPORT_STRICT); // funcion alias de mysqli_driver->report_mode. Habilita la funcion interna que lanza una mysqli_sql_exception para errors en lugar de advertencias
 
         try {
-            echo "<h3>Contenido de la tabla 'Departamento' de la base de datos 'DAW218DBDepartamentos' <span style='color:yellow;'>[MYSQLi]</span></h3>";
             @$oConexionMYSQLi = new mysqli(HOST, USER, PASSWORD, DB); //el @ para ignorar los warnings 
             $oConexionMYSQLi->set_charset("utf8");
 
@@ -90,7 +89,7 @@
                 ?>
                 <form id="formulario" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <fieldset>
-                        <legend>Buscar Departamento <span style='color:yellow;'>[PDO]</span></legend>
+                        <legend>Buscar Departamento <span style='color:yellow;'>[MySQLi]</span></legend>
                         <!-----------------DESCRIPCIÓN----------------->
                         <div class="required">
                             <label for="codigo">Descripción: </label>
@@ -159,7 +158,7 @@
                 ?>
                 <form id="formulario" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <fieldset>
-                        <legend>Buscar Departamento <span style='color:yellow;'>[PDO]</span></legend>
+                        <legend>Buscar Departamento <span style='color:yellow;'>[MySQLi]</span></legend>
                         <!-----------------DESCRIPCIÓN----------------->
                         <div class="required">
                             <label for="codigo">Descripción: </label>

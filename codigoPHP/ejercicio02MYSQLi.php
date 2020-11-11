@@ -75,7 +75,6 @@
                 echo "<h4>¡No hay ningún departamento!</h4>";
             }
             $seleccionTodosDep->close();
-            $seleccionTodosDep->free_result();
 
             $seleccionTodosDep2 = $oConexionMYSQLi->query("SELECT * FROM Departamento ORDER BY CodDepartamento");
 
