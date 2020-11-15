@@ -38,6 +38,18 @@
             </nav>
             <div id="ctabla">
                 <table id="ejercicios">
+                    <!--MANTENIMIENTO DEPARTAMENTOS-->
+                    <tr>
+                        <td class="enunciado">MANTENIMIENTO DEPARTAMENTOS.</td>
+                        <td class="iconos">
+                            <a href="MtoDepartamentosTema4/indexMtoDepartamentosTema4.php">
+                                <img class="imgejer" src="webroot/css/images/ejecutar.png" alt="Ejecutar" title="Ejecutar"/>
+                            </a>
+                        </td>
+                        <td>
+                            <p class="casper">         </p>
+                        </td>
+                    </tr>
                     <!--EJERCICIO 00 - SCRIPTS-->
                     <tr>
                         <td class="enunciado">[Ejercicio 00] - SCRIPTS DE LA BASE DE DATOS</td>
