@@ -64,13 +64,41 @@
             $aFormulario = [
                 'fDescripcion' => null
             ];
+            ?>
+            <form id="formulario" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <fieldset>
+                    <legend>Buscar Departamento <span style='color:yellow;'>[MySQLi]</span></legend>
+                    <!-----------------DESCRIPCIÓN----------------->
+                    <div class="required">
+                        <label for="codigo">Descripción: </label>
+                        <input type="text" name="descripcion" placeholder="Departamento de..." value="<?php
+                        //si no hay error y se ha insertado un valor en el campo con anterioridad
+                        if ($aErrores['eDescripcion'] == null && isset($_POST['descripcion'])) {
 
+                            //se muestra dicho valor (el campo no aparece vacío si se relleno correctamente 
+                            //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
+                            echo $_POST['descripcion'];
+                        }
+                        ?>"/>
+
+                        <?php
+                        //si hay error en este campo
+                        if ($aErrores['eDescripcion'] != NULL) {
+                            echo "<div class='errores'>" .
+                            //se muestra dicho error
+                            $aErrores['eDescripcion'] .
+                            '</div>';
+                        }
+                        ?>
+                    </div>
+                    <input type="submit" name="enviar" value="Enviar" />
+                </fieldset>
+            </form>
+            <?php
             if (isset($_POST['enviar'])) { //si se pulsa 'enviar' (input name="enviar")
                 //Validación de los campos (el resultado de la validación se mete en el array aErrores para comprobar posteriormente si da error)
                 //DESCRIPCIÓN (input type="text") [OBLIGATORIO {texto alfabetico}] 
-                $aErrores['eDescripcion'] = validacionFormularios::comprobarAlfabetico($_POST['descripcion'], 35, 1, REQUIRED);
-
-
+                $aErrores['eDescripcion'] = validacionFormularios::comprobarAlfabetico($_POST['descripcion'], 35, 1, OPTIONAL);
 
                 //recorremos el array de posibles errores (aErrores), si hay alguno, el campo se limpia y entradaOK es falsa (se vuelve a cargar el formulario)
                 foreach ($aErrores as $campo => $validacion) {
@@ -87,37 +115,6 @@
                 $aFormulario['fDescripcion'] = $_POST['descripcion'];
 
                 //formulario, se vuelve a mostrar (es el buscador), por si el usuario quiere seguir buscando (buscador constante)
-                ?>
-                <form id="formulario" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <fieldset>
-                        <legend>Buscar Departamento <span style='color:yellow;'>[MySQLi]</span></legend>
-                        <!-----------------DESCRIPCIÓN----------------->
-                        <div class="required">
-                            <label for="codigo">Descripción: </label>
-                            <input type="text" name="descripcion" placeholder="Departamento de..." value="<?php
-                            //si no hay error y se ha insertado un valor en el campo con anterioridad
-                            if ($aErrores['eDescripcion'] == null && isset($_POST['descripcion'])) {
-
-                                //se muestra dicho valor (el campo no aparece vacío si se relleno correctamente 
-                                //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
-                                echo $_POST['descripcion'];
-                            }
-                            ?>"/>
-
-                            <?php
-                            //si hay error en este campo
-                            if ($aErrores['eDescripcion'] != NULL) {
-                                echo "<div class='errores'>" .
-                                //se muestra dicho error
-                                $aErrores['eDescripcion'] .
-                                '</div>';
-                            }
-                            ?>
-                        </div>
-                        <input type="submit" name="enviar" value="Enviar" />
-                    </fieldset>
-                </form>
-                <?php
                 //Consulta preparada = búsqueda de departamento
                 //Preparación
                 $buscarDepartamento = $oConexionMYSQLi->stmt_init();
@@ -127,8 +124,6 @@
                 $buscarDepartamento->execute();
                 $buscarDepartamento->store_result(); //alamacenamos el resultado, con el objetivo de poder utilizar num_rows
                 $buscarDepartamento->bind_result($codigo, $descripcion, $volumen, $fecha); //obtenemos el resultado y lo metemos enn variables
-
-
 
                 $numeroDepartamentos1 = $buscarDepartamento->num_rows;
                 if ($numeroDepartamentos1 !== 0) {
@@ -156,37 +151,6 @@
                 $buscarDepartamento->close();
             } else { // si el formulario no esta correctamente rellenado (campos vacios o valores introducidos incorrectos) o no se ha rellenado nunca
                 //formulario inicial (es el que aparece según accedes a la práctica)
-                ?>
-                <form id="formulario" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <fieldset>
-                        <legend>Buscar Departamento <span style='color:yellow;'>[MySQLi]</span></legend>
-                        <!-----------------DESCRIPCIÓN----------------->
-                        <div class="required">
-                            <label for="codigo">Descripción: </label>
-                            <input type="text" name="descripcion" placeholder="Departamento de..." value="<?php
-                            //si no hay error y se ha insertado un valor en el campo con anterioridad
-                            if ($aErrores['eDescripcion'] == null && isset($_POST['descripcion'])) {
-
-                                //se muestra dicho valor (el campo no aparece vacío si se relleno correctamente 
-                                //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
-                                echo $_POST['descripcion'];
-                            }
-                            ?>"/>
-
-                            <?php
-                            //si hay error en este campo
-                            if ($aErrores['eDescripcion'] != NULL) {
-                                echo "<div class='errores'>" .
-                                //se muestra dicho error
-                                $aErrores['eDescripcion'] .
-                                '</div>';
-                            }
-                            ?>
-                        </div>
-                        <input type="submit" name="enviar" value="Enviar" />
-                    </fieldset>
-                </form>
-                <?php
                 //MOSTRAMOS TODOS LOS DEPARTAMENTOS EN UNA TABLA, SITUADA POR DEBAJO DEL BUSCADOR
                 $seleccionTodosDep = $oConexionMYSQLi->stmt_init();
                 $consultaTodos = "SELECT * FROM Departamento ORDER BY CodDepartamento";
