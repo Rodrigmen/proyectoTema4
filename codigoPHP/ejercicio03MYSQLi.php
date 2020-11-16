@@ -37,7 +37,8 @@
          * @author Rodrigo Robles <rodrigo.robmin@educa.jcyl.es>
          */
         require_once '../config/confDBMYSQLiOne.php';
-        mysqli_report(MYSQLI_REPORT_STRICT); // funcion alias de mysqli_driver->report_mode. Habilita la funcion interna que lanza una mysqli_sql_exception para errors en lugar de advertencias
+        $controlador = new mysqli_driver();
+        $controlador->report_mode = MYSQLI_REPORT_STRICT; // funcion alias de mysqli_driver->report_mode. Habilita la funcion interna que lanza una mysqli_sql_exception para errors en lugar de advertencias
 
         try {
             @$oConexionMYSQLi = new mysqli(HOST, USER, PASSWORD, DB); //el @ para ignorar los warnings 

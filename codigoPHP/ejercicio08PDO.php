@@ -1,40 +1,14 @@
 <?php
-$fichero = '../tmp/departamentos.xml';
-if (file_exists($fichero)) {
-    header('Content-Type: application/octet-stream');
-    header('Content-Disposition: attachment; filename="' . basename($fichero) . '"');
-    header('Content-Length: ' . filesize($fichero));
-    readfile($fichero);
-    exit;
-} else {
-    echo "<p style='color:red;'>Error al obtener el archivo XML</p>"; //Muestra el mesaje de error
-}
-?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>ejercicio08PDO - DWES</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/jpg" href="../webroot/css/images/favicon.jpg" /> 
-        <style>
-            body{
-                background-color: #A9C6FF;
-            }
-        </style>
 
-    </head>
-    <body>
-        <?php
-        /**
-         *  Página web que toma datos (código y descripción) de la tabla Departamento y guarda en un fichero departamento.xml. 
-         * (COPIA DE SEGURIDAD / EXPORTAR). El fichero exportado se encuentra en el directorio .../tmp/ del servidor [PDO]
-         * sudo chmod -R 2775 /var/www/html -> comando necesario para que el servidor tenga permisos de creación de documentos
-         * @version 1.0.0
-         * @since 03-11-2020
-         * @author Rodrigo Robles <rodrigo.robmin@educa.jcyl.es>
-         */
-        require_once '../config/confDBPDOOne.php';
+/**
+ *  Página web que toma datos (código y descripción) de la tabla Departamento y guarda en un fichero departamento.xml. 
+ * (COPIA DE SEGURIDAD / EXPORTAR). El fichero exportado se encuentra en el directorio .../tmp/ del servidor [PDO]
+ * sudo chmod -R 2775 /var/www/html -> comando necesario para que el servidor tenga permisos de creación de documentos
+ * @version 1.0.0
+ * @since 03-11-2020
+ * @author Rodrigo Robles <rodrigo.robmin@educa.jcyl.es>
+ */
+require_once '../config/confDBPDOOne.php';
 
 
 try {
@@ -80,6 +54,16 @@ try {
 
     $nombreArchivo = "../tmp/departamentos.xml"; //decidimos el directorio y el nombre del archivo
     $guardado = $docXML->save($nombreArchivo); //guardamos el archivo
+
+    if (file_exists($nombreArchivo)) {
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="' . basename($nombreArchivo) . '"');
+        header('Content-Length: ' . filesize($nombreArchivo));
+        readfile($nombreArchivo);
+        exit;
+    } else {
+        echo "<p style='color:red;'>Error al obtener el archivo XML</p>"; //Muestra el mesaje de error
+    }
 } catch (PDOException $errorConexion) {
     echo "<p style='color:red;'>Mensaje de error: " . $excepcionPDO->getMessage() . "</p>"; //Muestra el mesaje de error
     echo "<p style='color:red;'>Código de error: " . $excepcionPDO->getCode() . "</p>"; // Muestra el codigo del error
@@ -87,8 +71,5 @@ try {
     unset($oConexionPDO); //destruimos el objeto
 }
 ?>
-
-    </body>
-
-</html>    
+  
 
