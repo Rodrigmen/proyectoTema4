@@ -42,7 +42,7 @@
                     <tr>
                         <td class="enunciado">MANTENIMIENTO DEPARTAMENTOS.</td>
                         <td class="iconos">
-                            <a href="MtoDepartamentosTema4/indexMtoDepartamentosTema4.php">
+                            <a href="MtoDepartamentosTema4/codigoPHP/indexMtoDepartamentosTema4.php">
                                 <img class="imgejer" src="webroot/css/images/ejecutar.png" alt="Ejecutar" title="Ejecutar"/>
                             </a>
                         </td>
@@ -232,7 +232,7 @@
                                 <img class="imgejer" src="webroot/css/images/mostrar.png" alt="MostrarPDO" title="MostrarPDO"/>
                             </a>
                         </td>
-                        
+
                         <td class="iconos">
                             <a href="codigoPHP/ejercicio04MYSQLi.php">
                                 <img class="imgejer" src="webroot/css/images/ejecutar.png" alt="EjecutarMYSQLi" title="EjecutarMYSQLi"/>
@@ -303,7 +303,7 @@
                             <p class="casper">         </p>
                         </td>
                     </tr>
-                    
+
                     <!--SEPARACIÓN SEGÚN TIPO DE ARCHIVOS-->
                     <tr id="marcatabla">
                         <th></th>
@@ -352,13 +352,13 @@
                             </a>
                         </td>
                         <td>
-                            
+
                             <p class="casper">         </p>
                         </td>
                     </tr>
-                    
-                 
-                    
+
+
+
 
                     <!--EJERCICIO 08 - EXPORTAR BASE DE DATOS -->
                     <tr>

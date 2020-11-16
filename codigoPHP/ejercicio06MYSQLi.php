@@ -43,40 +43,7 @@
             @$oConexionMYSQLi = new mysqli(HOST, USER, PASSWORD, DB); //el @ para ignorar los warnings 
             $oConexionMYSQLi->set_charset("utf8");
             $oConexionMYSQLi->autocommit(false);
-
-            //PASO PREVIO: COMPROBAMOS SI YA SE HA REALIZADO ESTA TRANSACCIÓN CON ANTERIORIDAD
-            //comprobamos si existen los tres departamentos que vamos a incluir, si existen los borramos para posteriormente incluirlos de nuevo
-
-            $yaIncluidos = false; //variable booleana que indica que a priori es falso que se haya realizado previamente la transacción
             $seleccionTodosDep = $oConexionMYSQLi->stmt_init();
-            $consultaTodos = "SELECT * FROM Departamento WHERE CodDepartamento = ?";
-            $aCodigos = ['OOA', 'OOB', 'OOC', 'OOD', 'OOE'];
-            $seleccionTodosDep->prepare($consultaTodos);
-            $seleccionTodosDep->execute();
-            foreach ($aCodigos as $codigo) {
-                $seleccionTodosDep->bind_param('s', $codigo);
-                //Ejecutamos la consulta
-                $seleccionTodosDep->execute();
-                $seleccionTodosDep->store_result(); //alamacenamos el resultado, con el objetivo de poder utilizar num_rows
-                $numeroDepartamentos = $seleccionTodosDep->num_rows();
-
-                if ($numeroDepartamentos > 0) {
-                    $yaIncluidos = true;
-                }
-            }
-            $seleccionTodosDep->close();
-
-            if ($yaIncluidos === true) {//si se realizo la transaccion previamente
-                $borramosDepartamentos = $oConexionMYSQLi->stmt_init();
-                $borramosDepartamentos->prepare('DELETE FROM Departamento WHERE CodDepartamento LIKE ?'); //se borran, dando paso a una nueva transacción
-                foreach ($aCodigos as $codigo) {
-                    $borramosDepartamentos->bind_param('s', $codigo);
-                    $borramosDepartamentos->execute();
-                }
-                $borramosDepartamentos->close();
-            }
-
-            
             $aDepartamentos = [
                 1 => ['OOA', 'Departamento Array', 1],
                 2 => ['OOB', 'Departamento Array', 2],
