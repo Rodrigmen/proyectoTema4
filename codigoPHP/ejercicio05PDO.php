@@ -21,7 +21,7 @@
          * @since 30-10-2020
          * @author Rodrigo Robles <rodrigo.robmin@educa.jcyl.es>
          */
-        require_once '../config/confDBPDOCasa.php';
+        require_once '../config/confDBPDO.php';
 
         try {
             $oConexionPDO = new PDO(DSN, USER, PASSWORD, CHARSET); //creo el objeto PDO con las constantes iniciadas en el archivo confDBPDO.php
