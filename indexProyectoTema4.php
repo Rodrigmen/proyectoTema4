@@ -42,7 +42,7 @@
                     <tr>
                         <td class="enunciado">MANTENIMIENTO DEPARTAMENTOS.</td>
                         <td class="iconos">
-                            <a href="MtoDepartamentosTema4/codigoPHP/indexMtoDepartamentosTema4.php">
+                            <a href="MtoDepartamentosTema4/codigoPHP/MtoDepartamentos.php">
                                 <img class="imgejer" src="webroot/css/images/ejecutar.png" alt="Ejecutar" title="Ejecutar"/>
                             </a>
                         </td>
