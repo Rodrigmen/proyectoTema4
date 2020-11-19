@@ -3,7 +3,6 @@
     //PDO Y MYSQLi
     define('USER', 'dbu1120028');
     define('PASSWORD', 'Covid1234$');
-    
     //Solo MYSQLi
     define('DB','dbs939491');
     //MYSQLi CLASE
