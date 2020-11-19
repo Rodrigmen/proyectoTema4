@@ -26,33 +26,7 @@
         try {
             $oConexionPDO = new PDO(DSN, USER, PASSWORD, CHARSET); //creo el objeto PDO con las constantes iniciadas en el archivo confDBPDO.php
             $oConexionPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //le damos este atributo a la conexión (la configuramos) para poder utilizar las excepciones
-            $oConexionPDO->beginTransaction();
-            //PASO PREVIO: COMPROBAMOS SI YA SE HA REALIZADO ESTA TRANSACCIÓN CON ANTERIORIDAD
-            //comprobamos si existen los tres departamentos que vamos a incluir, si existen los borramos para posteriormente incluirlos de nuevo
-            //Preparamos la consulta
-            $yaIncluidos = false; //variable booleana que indica que a priori es falso que se haya realizado previamente la transacción
-            $consultaTodos = "SELECT * FROM Departamento WHERE CodDepartamento = :codigo";
-            $seleccionTodosDep = $oConexionPDO->prepare($consultaTodos);
-            $aCodigos = ['AAT', 'ABT', 'ACT'];
-            foreach ($aCodigos as $codigo) {
-                $seleccionTodosDep->bindParam(':codigo', $codigo);
-                //Ejecutamos la consulta
-                $seleccionTodosDep->execute();
-                $numeroDepartamentos = $seleccionTodosDep->rowCount();
-
-                if ($numeroDepartamentos>0) {
-                    $yaIncluidos = true;
-                }
-            }
-
-
-            if ($yaIncluidos === true) {//si se realizo la transaccion previamente
-                $borramosDepartamentos = $oConexionPDO->prepare('DELETE FROM Departamento WHERE CodDepartamento LIKE :codigoI'); //se borran, dando paso a una nueva transacción
-                foreach ($aCodigos as $codigo) {
-                    $borramosDepartamentos->bindParam(':codigoI', $codigo);
-                    $borramosDepartamentos->execute();
-                }
-            }
+            $oConexionPDO->beginTransaction();           
             $aDepartamentos = [
                 1 => ['AAT', 'Departamento de Transaccion', 1],
                 2 => ['ABT', 'Departamento de Transaccion', 2],

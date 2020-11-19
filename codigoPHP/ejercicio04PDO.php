@@ -44,23 +44,6 @@
             $oConexionPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //le damos este atributo a la conexión (la configuramos) para poder utilizar las excepciones
             //Requerimos una vez la libreria de validaciones
             require_once '../core/201020libreriaValidacion.php';
-
-            //Creamos una variable boleana para definir cuando esta bien o mal rellenado el formulario
-            $entradaOK = true;
-
-            //Creamos dos constantes: 'REQUIRED' indica si un campo es obligatorio (tiene que tener algun valor); 'OPTIONAL' indica que un campo no es obligatorio
-            define('REQUIRED', 1);
-            define('OPTIONAL', 0);
-
-            //Array que contiene los posibles errores de los campos del formulario
-            $aErrores = [
-                'eDescripcion' => null,
-            ];
-
-            //Array que contiene los valores correctos de los campos del formulario
-            $aFormulario = [
-                'fDescripcion' => null
-            ];
             ?>
             <form id="formulario" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <fieldset>
@@ -70,114 +53,54 @@
                         <label for="codigo">Descripción: </label>
                         <input type="text" name="descripcion" placeholder="Departamento de..." value="<?php
                         //si no hay error y se ha insertado un valor en el campo con anterioridad
-                        if ($aErrores['eDescripcion'] == null && isset($_POST['descripcion'])) {
-
-                            //se muestra dicho valor (el campo no aparece vacío si se relleno correctamente 
-                            //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
+                        if (isset($_POST['descripcion'])) {
                             echo $_POST['descripcion'];
                         }
                         ?>"/>
-
-                        <?php
-                        //si hay error en este campo
-                        if ($aErrores['eDescripcion'] != NULL) {
-                            echo "<div class='errores'>" .
-                            //se muestra dicho error
-                            $aErrores['eDescripcion'] .
-                            '</div>';
-                        }
-                        ?>
                     </div>
                     <input type="submit" name="enviar" value="Enviar" />
                 </fieldset>
             </form>
             <?php
+            $descripcionBuscada = "";
             if (isset($_POST['enviar'])) { //si se pulsa 'enviar' (input name="enviar")
-                //Validación de los campos (el resultado de la validación se mete en el array aErrores para comprobar posteriormente si da error)
-                //DESCRIPCIÓN (input type="text") [OBLIGATORIO {texto alfabetico}] 
-                $aErrores['eDescripcion'] = validacionFormularios::comprobarAlfabetico($_POST['descripcion'], 35, 1, OPTIONAL);
-
-                //recorremos el array de posibles errores (aErrores), si hay alguno, el campo se limpia y entradaOK es falsa (se vuelve a cargar el formulario)
-                foreach ($aErrores as $campo => $validacion) {
-                    if ($validacion != null) {
-                        $entradaOK = false;
-                    }
-                }
-            } else { // sino se pulsa 'enviar'
-                $entradaOK = false;
+                $descripcionBuscada = $_POST['descripcion'];
             }
 
-            if ($entradaOK) { //si el formulario esta bien rellenado
-                //formulario, se vuelve a mostrar (es el buscador), por si el usuario quiere seguir buscando (buscador constante)
-                //Consulta preparada = búsqueda de departamento
-                //Preparación
-                $consultaBuscar = "SELECT * FROM Departamento WHERE DescDepartamento LIKE CONCAT('%', :descripcion, '%')";
+            $consultaBuscar = "SELECT * FROM Departamento WHERE DescDepartamento LIKE CONCAT('%', :descripcion, '%')";
 
-                $buscarDepartamento = $oConexionPDO->prepare($consultaBuscar);
+            $buscarDepartamento = $oConexionPDO->prepare($consultaBuscar);
 
-                //Inserción de datos en al consulta
-                $buscarDepartamento->bindParam(':descripcion', $_POST['descripcion']);
+            //Inserción de datos en al consulta
+            $buscarDepartamento->bindParam(':descripcion', $descripcionBuscada);
 
-                //Ejecución
-                $buscarDepartamento->execute();
+            //Ejecución
+            $buscarDepartamento->execute();
 
-                $numeroDepartamentos = $buscarDepartamento->rowCount(); //número de departamentos encontrados
+            $numeroDepartamentos = $buscarDepartamento->rowCount(); //número de departamentos encontrados
 
-                if ($numeroDepartamentos !== 0) { //si si se encuentran departamentos, se muestran
-                    echo "<table>"
-                    . "<tr>"
-                    . "<th>Código</th>"
-                    . "<th>Descripción</th>"
-                    . "<th>Volumen de negocio</th>"
-                    . "<th>Fecha de baja</th>"
+            if ($numeroDepartamentos !== 0) { //si si se encuentran departamentos, se muestran
+                echo "<table>"
+                . "<tr>"
+                . "<th>Código</th>"
+                . "<th>Descripción</th>"
+                . "<th>Volumen de negocio</th>"
+                . "<th>Fecha de baja</th>"
+                . "</tr>";
+                while ($departamento = $buscarDepartamento->fetch(PDO::FETCH_OBJ)) {
+                    echo "<tr>"
+                    . "<td>$departamento->CodDepartamento</td>"
+                    . "<td> $departamento->DescDepartamento</td>"
+                    . "<td> $departamento->VolumenNegocio</td>"
+                    . "<td> $departamento->FechaBaja</td>"
                     . "</tr>";
-                    while ($departamento = $buscarDepartamento->fetch(PDO::FETCH_OBJ)) {
-                        echo "<tr>"
-                        . "<td>$departamento->CodDepartamento</td>"
-                        . "<td> $departamento->DescDepartamento</td>"
-                        . "<td> $departamento->VolumenNegocio</td>"
-                        . "<td> $departamento->FechaBaja</td>"
-                        . "</tr>";
-                    }
-
-                    echo "</table>";
-
-                    echo "<h4>Departamentos encontrados: " . $numeroDepartamentos . "</h4>"; //y mostramos el nº de departamentos encontrados
-                } else {  //si no encontramos ningún departamento, lo notificamos al usuario
-                    echo "<h4>¡No hay ningún departamento con esa descripción!</h4>";
                 }
-            } else {
-                //Preparamos la consulta
-                $consultaTodos = "SELECT * FROM Departamento ORDER BY CodDepartamento";
-                $seleccionTodosDep = $oConexionPDO->prepare($consultaTodos);
 
-                //Ejecutamos la consulta
-                $seleccionTodosDep->execute();
+                echo "</table>";
 
-                $numeroDepartamentos = $seleccionTodosDep->rowCount(); //rowCount() te devuelve el número de filas afectadas por el query 
-                if ($numeroDepartamentos !== 0) {
-                    //Creamos una tabla, en la cual va a aparecer la respuesta de la consulta (los departamentos)
-                    echo "<table>"
-                    . "<tr>"
-                    . "<th>Código</th>"
-                    . "<th>Descripción</th>"
-                    . "<th>Volumen de negocio</th>"
-                    . "<th>Fecha de baja</th>"
-                    . "</tr>";
-                    while ($departamento = $seleccionTodosDep->fetch(PDO::FETCH_OBJ)) { //convertimos a objetos todos los departamentos, y mientras no sean nulos, se recorren
-                        echo "<tr>"
-                        . "<td>$departamento->CodDepartamento</td>"
-                        . "<td> $departamento->DescDepartamento</td>"
-                        . "<td> $departamento->VolumenNegocio</td>"
-                        . "<td> $departamento->FechaBaja</td>"
-                        . "</tr>";
-                    }
-
-                    echo "</table>";
-                    echo "<h4>Número de registros (departamentos): $numeroDepartamentos </h4>";
-                } else {
-                    echo "<h4>¡No hay ningún departamento!</h4>";
-                }
+                echo "<h4>Departamentos encontrados: " . $numeroDepartamentos . "</h4>"; //y mostramos el nº de departamentos encontrados
+            } else {  //si no encontramos ningún departamento, lo notificamos al usuario
+                echo "<h4>¡No hay ningún departamento con esa descripción!</h4>";
             }
         } catch (PDOException $excepcionPDO) {
             echo "<p style='color:red;'>Mensaje de error: " . $excepcionPDO->getMessage() . "</p>"; //Muestra el mesaje de error
