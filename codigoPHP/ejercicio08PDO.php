@@ -57,9 +57,8 @@ try {
 
     if (file_exists($nombreArchivo)) {
         header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="' . basename($nombreArchivo) . '"');
-        header('Content-Length: ' . filesize($nombreArchivo));
-        readfile($nombreArchivo);
+        header('Content-Disposition: attachment; filename="' . basename($fichero) . '"');
+        header('Content-Length: ' . filesize($fichero));
         exit;
     } else {
         echo "<p style='color:red;'>Error al obtener el archivo XML</p>"; //Muestra el mesaje de error
