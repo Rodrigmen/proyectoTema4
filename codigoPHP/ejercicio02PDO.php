@@ -35,7 +35,7 @@
          * @since 29-10-2020
          * @author Rodrigo Robles <rodrigo.robmin@educa.jcyl.es>
          */
-        require_once '../config/confDBPDOOne.php';
+        require_once '../config/confDBPDO.php';
         echo "<h3>Contenido de la tabla 'Departamento' de la base de datos 'DAW218DBDepartamentos' <span style='color:yellow;'>[PDO]</span></h3>";
         try {
             $oConexionPDO = new PDO(DSN, USER, PASSWORD, CHARSET); //creo el objeto PDO con las constantes iniciadas en el archivo confDBPDO.php

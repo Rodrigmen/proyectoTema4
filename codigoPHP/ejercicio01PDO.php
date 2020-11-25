@@ -21,7 +21,7 @@
          * @since 29-10-2020
          * @author Rodrigo Robles <rodrigo.robmin@educa.jcyl.es>
          */
-        require_once '../config/confDBPDOOne.php';
+        require_once '../config/confDBPDO.php';
 
 
         echo "<h1 style='color:green;'>ATRIBUTOS DE LA CONEXIÓN CON LA BASE DE DATOS DAW218DBDepartamentos mediante <span style='color:yellow;'>PDO</span></h1>";
