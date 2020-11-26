@@ -29,24 +29,33 @@
             $oConexionPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //le damos este atributo a la conexión (la configuramos) para poder utilizar las excepciones
             $oConexionPDO->beginTransaction();
             $aDepartamentos = [
-                1 => ['OOA', 'Departamento Array', 1],
-                2 => ['OOB', 'Departamento Array', 2],
-                3 => ['OOC', 'Departamento Array', 3],
-                4 => ['OOD', 'Departamento Array', 4],
-                5 => ['OOE', 'Departamento Array', 5],
+                ["CodDepartamento" => "OOA",
+                    "DescDepartamento" => "Departamento Array",
+                    "VolumenNegocio" => 1],
+                ["CodDepartamento" => "OOB",
+                    "DescDepartamento" => "Departamento Array",
+                    "VolumenNegocio" => 2],
+                ["CodDepartamento" => "OOC",
+                    "DescDepartamento" => "Departamento Array",
+                    "VolumenNegocio" => 3],
+                ["CodDepartamento" => "OOD",
+                    "DescDepartamento" => "Departamento Array",
+                    "VolumenNegocio" => 4],
+                ["CodDepartamento" => "OOE",
+                    "DescDepartamento" => "Departamento Array",
+                    "VolumenNegocio" => 5]
             ];
             //Creación de la consulta preparada
             $consultaInsertar = "INSERT INTO Departamento (CodDepartamento, DescDepartamento, VolumenNegocio) VALUES (:codigo, :descripcion, :volumen)";
 
             //Preparación de la consulta preparada
             $insertarDepartamentos = $oConexionPDO->prepare($consultaInsertar);
+            //Recorremos cada departamento mediante un foreach
             foreach ($aDepartamentos as $departamento) {
-                for ($i = 0; $i < count($departamento); $i++) {
-                    $insertarDepartamentos->bindParam(':codigo', $departamento[0]);
-                    $insertarDepartamentos->bindParam(':descripcion', $departamento[1]);
-                    $insertarDepartamentos->bindParam(':volumen', $departamento[2]);
-                }
-                $insertarDepartamentos->execute();
+                $insertarDepartamentos->bindParam(':codigo', $departamento["CodDepartamento"]); //sacamos los respectivos valores de cada departamento y se los introducimos en la consulta
+                $insertarDepartamentos->bindParam(':descripcion', $departamento["DescDepartamento"]);
+                $insertarDepartamentos->bindParam(':volumen', $departamento["VolumenNegocio"]);
+                $insertarDepartamentos->execute(); //ejecutamos la consulta de insercion por cada departamento en el array
             }
 
             $insertarDepartamentos->closeCursor();
@@ -58,7 +67,7 @@
             echo "Mensaje de error: " . $errorConexion->getMessage();
             echo "<br>Código de error: " . $errorConexion->getCode();
         } finally {
-            
+
             unset($oConexionPDO); //destruimos el objeto
         }
         ?>

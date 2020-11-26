@@ -23,7 +23,7 @@
          */
         require_once '../config/confDBMYSQLi.php';
         $controlador = new mysqli_driver();
-        $controlador->report_mode = MYSQLI_REPORT_STRICT;// funcion alias de mysqli_driver->report_mode. Habilita la funcion interna que lanza una mysqli_sql_exception para errors en lugar de advertencias
+        $controlador->report_mode = MYSQLI_REPORT_STRICT; // funcion alias de mysqli_driver->report_mode. Habilita la funcion interna que lanza una mysqli_sql_exception para errors en lugar de advertencias
 
         try {
             @$oConexionMYSQLi = new mysqli(HOST, USER, PASSWORD, DB); //el @ para ignorar los warnings 
@@ -31,9 +31,15 @@
             $oConexionMYSQLi->autocommit(false);
             $seleccionTodosDep = $oConexionMYSQLi->stmt_init();
             $aDepartamentos = [
-                1 => ['AAT', 'Departamento de Transaccion', 1],
-                2 => ['ABT', 'Departamento de Transaccion', 2],
-                3 => ['ACT', 'Departamento de Transaccion', 3],
+                ["CodDepartamento" => "AAT",
+                    "DescDepartamento" => "Departamento de Transaccion",
+                    "VolumenNegocio" => 1],
+                ["CodDepartamento" => "ABT",
+                    "DescDepartamento" => "Departamento de Transaccion",
+                    "VolumenNegocio" => 2],
+                ["CodDepartamento" => "ACT",
+                    "DescDepartamento" => "Departamento de Transaccion",
+                    "VolumenNegocio" => 3]
             ];
 
             $insertarDepartamentos = $oConexionMYSQLi->stmt_init();
@@ -42,12 +48,10 @@
 
             //Preparación de la consulta preparada
             $insertarDepartamentos->prepare($consultaInsertar);
-
+            //Recorremos cada departamento mediante un foreach
             foreach ($aDepartamentos as $departamento) {
-                for ($i = 0; $i < count($departamento); $i++) {
-                    $insertarDepartamentos->bind_param('ssi', $departamento[0], $departamento[1], $departamento[2]);
-                    $insertarDepartamentos->execute();
-                }
+                $insertarDepartamentos->bind_param('ssi', $departamento["CodDepartamento"], $departamento["DescDepartamento"], $departamento["VolumenNegocio"]); //sacamos los respectivos valores de cada departamento y se los introducimos en la consulta
+                $insertarDepartamentos->execute(); //ejecutamos la consulta de insercion por cada departamento en el array
             }
             $insertarDepartamentos->close();
             $oConexionMYSQLi->commit();
