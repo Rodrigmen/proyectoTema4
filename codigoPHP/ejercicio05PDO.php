@@ -18,7 +18,7 @@
          * Pagina web que añade tres registros a nuestra tabla Departamento utilizando tres instrucciones insert y una transacción, de tal forma que se añadan los tres registros o no se añada ninguno. [PDO]
          * 
          * @version 1.0.0
-         * @since 30-10-2020
+         * @since 26-11-2020
          * @author Rodrigo Robles <rodrigo.robmin@educa.jcyl.es>
          */
         require_once '../config/confDBPDO.php';
@@ -26,26 +26,31 @@
         try {
             $oConexionPDO = new PDO(DSN, USER, PASSWORD, CHARSET); //creo el objeto PDO con las constantes iniciadas en el archivo confDBPDO.php
             $oConexionPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //le damos este atributo a la conexión (la configuramos) para poder utilizar las excepciones
-            $oConexionPDO->beginTransaction();           
+            $oConexionPDO->beginTransaction();
+            //ARRAY ASOCIATIVO POR QUE SABEMOS LOS DATOS
             $aDepartamentos = [
-                1 => ['AAT', 'Departamento de Transaccion', 1],
-                2 => ['ABT', 'Departamento de Transaccion', 2],
-                3 => ['ACT', 'Departamento de Transaccion', 3],
+                ["CodDepartamento" => "AAT",
+                    "DescDepartamento" => "Departamento de Transaccion",
+                    "VolumenNegocio" => 1],
+                ["CodDepartamento" => "ABT",
+                    "DescDepartamento" => "Departamento de Transaccion",
+                    "VolumenNegocio" => 2],
+                ["CodDepartamento" => "ACT",
+                    "DescDepartamento" => "Departamento de Transaccion",
+                    "VolumenNegocio" => 3]
             ];
 
-            
             //Creación de la consulta preparada
             $consultaInsertar = "INSERT INTO Departamento (CodDepartamento, DescDepartamento, VolumenNegocio) VALUES (:codigo, :descripcion, :volumen)";
 
             //Preparación de la consulta preparada
             $insertarDepartamentos = $oConexionPDO->prepare($consultaInsertar);
+            //Recorremos cada departamento mediante un foreach
             foreach ($aDepartamentos as $departamento) {
-                for ($i = 0; $i < count($departamento); $i++) {
-                    $insertarDepartamentos->bindParam(':codigo', $departamento[0]);
-                    $insertarDepartamentos->bindParam(':descripcion', $departamento[1]);
-                    $insertarDepartamentos->bindParam(':volumen', $departamento[2]);
-                }
-                $insertarDepartamentos->execute();
+                $insertarDepartamentos->bindParam(':codigo', $departamento["CodDepartamento"]); //sacamos los respectivos valores de cada departamento y se los introducimos en la consulta
+                $insertarDepartamentos->bindParam(':descripcion', $departamento["DescDepartamento"]);
+                $insertarDepartamentos->bindParam(':volumen', $departamento["VolumenNegocio"]);
+                $insertarDepartamentos->execute(); //ejecutamos la consulta de insercion por cada departamento en el array
             }
 
             $oConexionPDO->commit();

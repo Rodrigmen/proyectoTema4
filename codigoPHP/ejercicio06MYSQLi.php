@@ -45,11 +45,21 @@
             $oConexionMYSQLi->autocommit(false);
             $seleccionTodosDep = $oConexionMYSQLi->stmt_init();
             $aDepartamentos = [
-                1 => ['OOA', 'Departamento Array', 1],
-                2 => ['OOB', 'Departamento Array', 2],
-                3 => ['OOC', 'Departamento Array', 3],
-                4 => ['OOD', 'Departamento Array', 4],
-                5 => ['OOE', 'Departamento Array', 5],
+                ["CodDepartamento" => "OOA",
+                    "DescDepartamento" => "Departamento Array",
+                    "VolumenNegocio" => 1],
+                ["CodDepartamento" => "OOB",
+                    "DescDepartamento" => "Departamento Array",
+                    "VolumenNegocio" => 2],
+                ["CodDepartamento" => "OOC",
+                    "DescDepartamento" => "Departamento Array",
+                    "VolumenNegocio" => 3],
+                ["CodDepartamento" => "OOD",
+                    "DescDepartamento" => "Departamento Array",
+                    "VolumenNegocio" => 4],
+                ["CodDepartamento" => "OOE",
+                    "DescDepartamento" => "Departamento Array",
+                    "VolumenNegocio" => 5]
             ];
 
             $insertarDepartamentos = $oConexionMYSQLi->stmt_init();
@@ -60,11 +70,10 @@
             //Preparación de la consulta preparada
             $insertarDepartamentos->prepare($consultaInsertar);
 
+            //Recorremos cada departamento mediante un foreach
             foreach ($aDepartamentos as $departamento) {
-                for ($i = 0; $i < count($departamento); $i++) {
-                    $insertarDepartamentos->bind_param('ssi', $departamento[0], $departamento[1], $departamento[2]);
-                    $insertarDepartamentos->execute();
-                }
+                $insertarDepartamentos->bind_param('ssi', $departamento["CodDepartamento"], $departamento["DescDepartamento"], $departamento["VolumenNegocio"]); //sacamos los respectivos valores de cada departamento y se los introducimos en la consulta
+                $insertarDepartamentos->execute(); //ejecutamos la consulta de insercion por cada departamento en el array
             }
             $insertarDepartamentos->close();
 
