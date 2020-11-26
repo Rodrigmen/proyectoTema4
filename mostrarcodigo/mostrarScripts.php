@@ -16,28 +16,28 @@
              * @author Rodrigo Robles <rodrigo.robmin@educa.jcyl.es>
              */
             
-            echo '<h1>SCRIPT DE CREACIÓN</h1>';
+            echo '<h1>SCRIPT DE CREACIÓN - SERVIDOR DE DESARROLLO</h1>';
             $filename = "../scriptDB/CreaDAW218DBDepartamentos.sql";
             highlight_file($filename);
             
-            echo '<h1>SCRIPT DE CARGA INICIAL</h1>';
+            echo '<h1>SCRIPT DE CARGA INICIAL - SERVIDOR DE DESARROLLO</h1>';
             $filename2 = "../scriptDB/CargaInicialDAW218DBDepartamentos.sql";
             highlight_file($filename2);
             
-            echo '<h1>SCRIPT DE BORRADO</h1>';
+            echo '<h1>SCRIPT DE BORRADO - SERVIDOR DE DESARROLLO</h1>';
             $filename3 = "../scriptDB/BorraDAW218DBDepartamentos.sql";
             highlight_file($filename3);
             
             echo '<h1>SCRIPT DE CREACIÓN - SERVIDORES 1&1</h1>';
-            $filename4 = "../scriptDB/crear.sql";
+            $filename4 = "../scriptDB/crear.php";
             highlight_file($filename4);
             
             echo '<h1>SCRIPT DE CARGA INICIAL - SERVIDORES 1&1</h1>';
-            $filename5 = "../scriptDB/cargar.sql";
+            $filename5 = "../scriptDB/cargar.php";
             highlight_file($filename5);
             
             echo '<h1>SCRIPT DE BORRADO - SERVIDORES 1&1</h1>';
-            $filename6 = "../scriptDB/borrar.sql";
+            $filename6 = "../scriptDB/borrar.php";
             highlight_file($filename6);
 
         ?>
