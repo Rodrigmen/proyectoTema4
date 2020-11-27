@@ -111,25 +111,6 @@
                         </td>
                     </tr>
 
-
-                    <!--VACIAR TABLA DEPARTAMENTOS-->
-                    <tr>
-                        <td class="enunciado">VACIAR TABLA DEPARTAMENTOS</td>
-                        <td class="iconos">
-                            <a href="codigoPHP/vaciarDepartamentos.php">
-                                <img class="imgejer" src="webroot/css/images/ejecutar.png" alt="VACIAR" title="VACIAR"/>
-                            </a>
-                        </td>
-                        <td class="iconos">
-                            <a href="mostrarcodigo/mostrarVaciar.php">
-                                <img class="imgejer" src="webroot/css/images/mostrar.png" alt="MostrarPDO" title="MostrarPDO"/>
-                            </a>
-                        </td>
-                        <td>
-                            <p class="casper">         </p>
-                        </td>
-                    </tr>
-
                     <!--SEPARACIÓN PDO Y MYSQLi-->
                     <tr id="marcatabla">
                         <th></th>

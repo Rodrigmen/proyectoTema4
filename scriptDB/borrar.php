@@ -12,7 +12,7 @@ try {
     $miDB = new PDO(DSN, USER, PASSWORD); //Instanciamos un objeto PDO y establecemos la conexión
     $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //Configuramos las excepciones
 
-    $sql = ("DELETE * FROM Departamento;");
+    $sql = ("TRUNCATE TABLE Departamento;");
     $miDB->exec($sql);
 
     echo "<h3> <span style='color: green;'>" . "Tabla creada correctamente</span></h3>"; //Si no se ha producido ningún error nos mostrará "Conexión establecida con éxito"
