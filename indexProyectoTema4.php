@@ -18,6 +18,7 @@
                             <li><a href="../doc/EstudioTema1.pdf" target="_blank">Tema 1</a></li>
                             <li><a href="../doc/EstudioTema2.pdf" target="_blank">Tema 2</a></li>
                             <li><a href="../proyectoTema3/indexProyectoTema3.php">Tema 3</a></li>
+                            <li><a href="../proyectoTema5/indexProyectoTema5.php">Tema 5</a></li>
                         </ul>
                     </li>
                     <li><a href="../../proyectoDAW/indexProyectoDAW.php">DAW</a>
@@ -56,6 +57,40 @@
                         <td class="iconos">
                             <a href="mostrarcodigo/mostrarScripts.php">
                                 <img class="imgejer" src="webroot/css/images/mostrar.png" alt="Mostrar" title="Mostrar"/>
+                            </a>
+                        </td>
+                        <td>
+                            <p class="casper">         </p>
+                        </td>
+                    </tr>
+                    <!--CREAR, CARGAR Y BORRAR-->
+                    <tr>
+                        <td class="enunciado">CREAR (SCRIPT)</td>
+                        <td class="iconos">
+                            <a href="scriptDB/crear.php">
+                                <img class="imgejer" src="webroot/css/images/ejecutar.png" alt="Ejecutar" title="Ejecutar"/>
+                            </a>
+                        </td>
+                        <td>
+                            <p class="casper">         </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="enunciado">CARGAR (SCRIPT)</td>
+                        <td class="iconos">
+                            <a href="scriptDB/cargar.php">
+                                <img class="imgejer" src="webroot/css/images/ejecutar.png" alt="Ejecutar" title="Ejecutar"/>
+                            </a>
+                        </td>
+                        <td>
+                            <p class="casper">         </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="enunciado">BORRAR (SCRIPT)</td>
+                        <td class="iconos">
+                            <a href="scriptDB/borrar.php">
+                                <img class="imgejer" src="webroot/css/images/ejecutar.png" alt="Ejecutar" title="Ejecutar"/>
                             </a>
                         </td>
                         <td>
