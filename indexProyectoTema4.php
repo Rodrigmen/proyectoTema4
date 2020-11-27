@@ -408,7 +408,7 @@
         <ul>
             <li>&copy2020-2021 | Rodrigo Robles Miñambres</li>
             <li>
-                <a target="_blank" href="https://github.com/Rodrigmen">
+                <a target="_blank" href="https://github.com/Rodrigmen/proyectoTema4">
                     <img id="imggit" title="GitHub" src="webroot/css/images/github.png"  alt="GITHUB">
                 </a>
             </li>
